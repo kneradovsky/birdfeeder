@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  </head>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script>
+        function empty(feeder) {
+            $.get("/empty/"+feeder,(data)=>console.log(data))
+        }
+        function refill(feeder) {
+            $.get("/refill/"+feeder,(data)=>console.log(data))
+        }
+        function weight(feeder) {
+            var w = $("#weight").val()
+            $.get("/weight/"+feeder+"/"+w,(data)=>console.log(data))
+        }
+        function get_feeder_and_call(callfun) {
+            feeder = $("#feeder_num").val()
+            callfun(feeder)
+        }
+        $('document').ready(()=>{
+            $("#btn_empty").on("click",()=> get_feeder_and_call(empty))
+            $("#btn_refill").on("click",()=> get_feeder_and_call(refill))
+            $("#btn_weight").on("click",() => get_feeder_and_call(weight))
+        })
+    </script>
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"><h3>Кормушка</h3></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col mb-3">
+                <div class="mb3">
+                <select class="form-select" id="feeder_num">
+                    <option value="1" selected>Кормушка 1</option>
+                    <option value="2">Кормушка 2</option>
+                    <option value="3">Кормушка 3</option>
+                    <option value="4">Кормушка 4</option>
+                </select>
+                </div>
+                <div class="mb-3 mt-4">
+                    <label for="weight" class="form-label">Вес корма :</label> 
+                    <input type="text" class="form-control" id="weight" placeholder="вес корма в граммах">
+                </div>
+            </div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <button type="button" class="btn btn-danger me-3 mb-3" id="btn_empty">Пустая</button>
+                <button type="button" class="btn btn-success me-3 mb-3" id="btn_refill">Заполнить</button>
+                <button type="button" class="btn btn-primary  me-3 mb-3" id="btn_weight">Задать вес</button>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+</html>
